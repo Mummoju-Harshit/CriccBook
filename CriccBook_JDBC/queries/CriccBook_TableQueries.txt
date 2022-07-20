@@ -1,0 +1,510 @@
+SQL> create table Admin(
+  2  admin_id varchar2(10) primary key,
+  3  password varchar2(15) NOT NULL);
+
+Table created.
+
+SQL> desc Admin;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ADMIN_ID                                  NOT NULL VARCHAR2(10)
+ PASSWORD                                  NOT NULL VARCHAR2(15)
+
+SQL> insert into Admin values('ADMIN', 'Harshit2002');
+
+1 row created.
+
+SQL> select * from Admin;
+
+ADMIN_ID   PASSWORD                                                             
+---------- ---------------                                                      
+ADMIN      Harshit2002                                                          
+
+SQL> create table Customer(
+  2  customer_id varchar2(10) primary key,
+  3  customer_name varchar2(20) NOT NULL,
+  4  password varchar2(15) NOT NULL);
+
+Table created.
+
+SQL> desc Customer;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ CUSTOMER_ID                               NOT NULL VARCHAR2(10)
+ CUSTOMER_NAME                             NOT NULL VARCHAR2(20)
+ PASSWORD                                  NOT NULL VARCHAR2(15)
+
+SQL> insert into Customer values('CS-01', 'Michael', 'mike2504');
+
+1 row created.
+
+SQL> insert into Customer values('CS-02', 'Andy', 'andy6464');
+
+1 row created.
+
+SQL> insert into Customer values('CS-03', 'Henry', 'henry3454');
+
+1 row created.
+
+SQL> insert into Customer values('CS-04', 'Chris', 'chris007');
+
+1 row created.
+
+SQL> select * from Customer;
+
+CUSTOMER_I CUSTOMER_NAME        PASSWORD                                        
+---------- -------------------- ---------------                                 
+CS-01      Michael              mike2504                                        
+CS-02      Andy                 andy6464                                        
+CS-03      Henry                henry3454                                       
+CS-04      Chris                chris007                                        
+
+SQL> create table Matches(
+  2  match_id varchar2(10) primary key,
+  3  team1 varchar2(10) NOT NULL,
+  4  team2 varchar2(10) NOT NULL);
+
+Table created.
+
+SQL> desc Matches;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ MATCH_ID                                  NOT NULL VARCHAR2(10)
+ TEAM1                                     NOT NULL VARCHAR2(10)
+ TEAM2                                     NOT NULL VARCHAR2(10)
+
+SQL> insert into Matches values('MT-01', 'CSK', 'KKR');
+
+1 row created.
+
+SQL> insert into Matches values('MT-02', 'MI', 'PBKS');
+
+1 row created.
+
+SQL> insert into Matches values('MT-03', 'SRH', 'RR');
+
+1 row created.
+
+SQL> insert into Matches values('MT-04', 'RCB', 'DC');
+
+1 row created.
+
+SQL> insert into Matches values('MT-05', 'KKR', 'PBKS');
+
+1 row created.
+
+SQL> insert into Matches values('MT-06', 'RR', 'RCB');
+
+1 row created.
+
+SQL> insert into Matches values('MT-07', 'CSK', 'MI');
+
+1 row created.
+
+SQL> select * from Matches;
+
+MATCH_ID   TEAM1      TEAM2                                                     
+---------- ---------- ----------                                                
+MT-01      CSK        KKR                                                       
+MT-02      MI         PBKS                                                      
+MT-03      SRH        RR                                                        
+MT-04      RCB        DC                                                        
+MT-05      KKR        PBKS                                                      
+MT-06      RR         RCB                                                       
+MT-07      CSK        MI                                                        
+
+7 rows selected.
+
+SQL> create table Stadium(
+  2  stadium_id varchar2(10) primary key,
+  3  stadium_name varchar2(25) NOT NULL,
+  4  location varchar2(30) NOT NULL,
+  5  tiers number(2));
+
+Table created.
+
+SQL> desc Stadium;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STADIUM_ID                                NOT NULL VARCHAR2(10)
+ STADIUM_NAME                              NOT NULL VARCHAR2(25)
+ LOCATION                                  NOT NULL VARCHAR2(30)
+ TIERS                                              NUMBER(2)
+
+SQL> insert into Stadium values('STD-01', 'Rajiv Gandhi STD', 'HYD', 4);
+
+1 row created.
+
+SQL> insert into Stadium values('STD-02', 'Wankhede STD', 'MUM', 6);
+
+1 row created.
+
+SQL> insert into Stadium values('STD-03', 'Chidambaram STD', 'CHN', 6);
+
+1 row created.
+
+SQL> select * from Stadium;
+
+STADIUM_ID STADIUM_NAME              LOCATION                            TIERS  
+---------- ------------------------- ------------------------------ ----------  
+STD-01     Rajiv Gandhi STD          HYD                                     4  
+STD-02     Wankhede STD              MUM                                     6  
+STD-03     Chidambaram STD           CHN                                     6  
+
+SQL> create table Schedule(
+  2  match_id varchar2(10),
+  3  stadium_id varchar2(10),
+  4  mdate DATE,
+  5  day varchar2(5) NOT NULL,
+  6  mtime varchar2(10) NOT NULL,
+  7  foreign key(match_id) references Matches(match_id),
+  8  foreign key(stadium_id) references Stadium(stadium_id),
+  9  primary key(match_id, stadium_id));
+
+Table created.
+
+SQL> desc Schedule;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ MATCH_ID                                  NOT NULL VARCHAR2(10)
+ STADIUM_ID                                NOT NULL VARCHAR2(10)
+ MDATE                                              DATE
+ DAY                                       NOT NULL VARCHAR2(5)
+ MTIME                                     NOT NULL VARCHAR2(10)
+
+SQL> insert into Schedule values('MT-01', 'STD-01', '26-SEP-21', 'SUN', '3:30 PM');
+
+1 row created.
+
+SQL> insert into Schedule values('MT-02', 'STD-02', '26-SEP-21', 'SUN', '7:30 PM');
+
+1 row created.
+
+SQL> insert into Schedule values('MT-03', 'STD-03', '27-SEP-21', 'MON', '7:30 PM');
+
+1 row created.
+
+SQL> insert into Schedule values('MT-04', 'STD-01', '28-SEP-21', 'TUE', '7:30 PM');
+
+1 row created.
+
+SQL> insert into Schedule values('MT-05', 'STD-02', '29-SEP-21', 'WED', '7:30 PM');
+
+1 row created.
+
+SQL> insert into Schedule values('MT-06', 'STD-03', '30-SEP-21', 'THU', '7:30 PM');
+
+1 row created.
+
+SQL> insert into Schedule values('MT-07', 'STD-01', '01-OCT-21', 'FRI', '7:30 PM');
+
+1 row created.
+
+SQL> select * from Schedule;
+
+MATCH_ID   STADIUM_ID MDATE     DAY   MTIME                                     
+---------- ---------- --------- ----- ----------                                
+MT-01      STD-01     26-SEP-21 SUN   3:30 PM                                   
+MT-02      STD-02     26-SEP-21 SUN   7:30 PM                                   
+MT-03      STD-03     27-SEP-21 MON   7:30 PM                                   
+MT-04      STD-01     28-SEP-21 TUE   7:30 PM                                   
+MT-05      STD-02     29-SEP-21 WED   7:30 PM                                   
+MT-06      STD-03     30-SEP-21 THU   7:30 PM                                   
+MT-07      STD-01     01-OCT-21 FRI   7:30 PM                                   
+
+7 rows selected.
+
+SQL> create table Tier(
+  2  tier_id varchar2(10),
+  3  stadium_id varchar2(10),
+  4  tier_name varchar2(20) NOT NULL,
+  5  seats number(3),
+  6  foreign key(stadium_id) references Stadium(stadium_id),
+  7  primary key(tier_id, stadium_id));
+
+Table created.
+
+SQL> desc Tier;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TIER_ID                                   NOT NULL VARCHAR2(10)
+ STADIUM_ID                                NOT NULL VARCHAR2(10)
+ TIER_NAME                                 NOT NULL VARCHAR2(20)
+ SEATS                                              NUMBER(3)
+
+SQL> insert into Tier values('TR-01', 'STD-01', 'North Pavilion End', 4);
+
+1 row created.
+
+SQL> insert into Tier values('TR-02', 'STD-01', 'South Pavilion End', 4);
+
+1 row created.
+
+SQL> insert into Tier values('TR-03', 'STD-01', 'West Stand', 4);
+
+1 row created.
+
+SQL> insert into Tier values('TR-04', 'STD-01', 'East Stand', 4);
+
+1 row created.
+
+SQL> insert into Tier values('TR-01', 'STD-02', 'North Stand', 4);
+
+1 row created.
+
+SQL> insert into Tier values('TR-02', 'STD-02', 'South Stand', 4);
+
+1 row created.
+
+SQL> insert into Tier values('TR-03', 'STD-02', 'Sachin Tenduklar End', 4);
+
+1 row created.
+
+SQL> insert into Tier values('TR-04', 'STD-02', 'Sunil Gavaskar End', 4);
+
+1 row created.
+
+SQL> insert into Tier values('TR-05', 'STD-02', 'Vijay Merchant End', 4);
+
+1 row created.
+
+SQL> insert into Tier values('TR-06', 'STD-02', 'Grand Stand', 4);
+
+1 row created.
+
+SQL> select * from Tier;
+
+TIER_ID    STADIUM_ID TIER_NAME                 SEATS                           
+---------- ---------- -------------------- ----------                           
+TR-01      STD-01     North Pavilion End            4                           
+TR-02      STD-01     South Pavilion End            4                           
+TR-03      STD-01     West Stand                    4                           
+TR-04      STD-01     East Stand                    4                           
+TR-01      STD-02     North Stand                   4                           
+TR-02      STD-02     South Stand                   4                           
+TR-03      STD-02     Sachin Tenduklar End          4                           
+TR-04      STD-02     Sunil Gavaskar End            4                           
+TR-05      STD-02     Vijay Merchant End            4                           
+TR-06      STD-02     Grand Stand                   4                           
+
+10 rows selected.
+
+SQL> create table Seat(
+  2  seat_id varchar2(10),
+  3  tier_id varchar2(10),
+  4  stadium_id varchar2(10),
+  5  price varchar2(10) NOT NULL,
+  6  foreign key(tier_id, stadium_id) references Tier(tier_id, stadium_id),
+  7  primary key(seat_id, tier_id, stadium_id));
+
+Table created.
+
+SQL> desc Seat;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SEAT_ID                                   NOT NULL VARCHAR2(10)
+ TIER_ID                                   NOT NULL VARCHAR2(10)
+ STADIUM_ID                                NOT NULL VARCHAR2(10)
+ PRICE                                     NOT NULL VARCHAR2(10)
+
+SQL> insert into Seat values('A-01', 'TR-01', 'STD-01', 'Rs. 1000/-');
+
+1 row created.
+
+SQL> insert into Seat values('A-02', 'TR-01', 'STD-01', 'Rs. 1000/-');
+
+1 row created.
+
+SQL> insert into Seat values('B-01', 'TR-01', 'STD-01', 'Rs. 1000/-');
+
+1 row created.
+
+SQL> insert into Seat values('B-02', 'TR-01', 'STD-01', 'Rs. 1000/-');
+
+1 row created.
+
+SQL> insert into Seat values('A-01', 'TR-02', 'STD-01', 'Rs. 800/-');
+
+1 row created.
+
+SQL> insert into Seat values('A-02', 'TR-02', 'STD-01', 'Rs. 800/-');
+
+1 row created.
+
+SQL> insert into Seat values('B-01', 'TR-02', 'STD-01', 'Rs. 800/-');
+
+1 row created.
+
+SQL> insert into Seat values('B-02', 'TR-02', 'STD-01', 'Rs. 800/-');
+
+1 row created.
+
+SQL> insert into Seat values('A-01', 'TR-03', 'STD-01', 'Rs. 850/-');
+
+1 row created.
+
+SQL> insert into Seat values('A-02', 'TR-03', 'STD-01', 'Rs. 850/-');
+
+1 row created.
+
+SQL> insert into Seat values('B-01', 'TR-03', 'STD-01', 'Rs. 850/-');
+
+1 row created.
+
+SQL> insert into Seat values('B-02', 'TR-03', 'STD-01', 'Rs. 850/-');
+
+1 row created.
+
+SQL> insert into Seat values('A-01', 'TR-04', 'STD-01', 'Rs. 900/-');
+
+1 row created.
+
+SQL> insert into Seat values('A-02', 'TR-04', 'STD-01', 'Rs. 900/-');
+
+1 row created.
+
+SQL> insert into Seat values('B-01', 'TR-04', 'STD-01', 'Rs. 900/-');
+
+1 row created.
+
+SQL> insert into Seat values('B-02', 'TR-04', 'STD-01', 'Rs. 900/-');
+
+1 row created.
+
+SQL> select * from Seat;
+
+SEAT_ID    TIER_ID    STADIUM_ID PRICE                                          
+---------- ---------- ---------- ----------                                     
+A-01       TR-01      STD-01     Rs. 1000/-                                     
+A-02       TR-01      STD-01     Rs. 1000/-                                     
+B-01       TR-01      STD-01     Rs. 1000/-                                     
+B-02       TR-01      STD-01     Rs. 1000/-                                     
+A-01       TR-02      STD-01     Rs. 800/-                                      
+A-02       TR-02      STD-01     Rs. 800/-                                      
+B-01       TR-02      STD-01     Rs. 800/-                                      
+B-02       TR-02      STD-01     Rs. 800/-                                      
+A-01       TR-03      STD-01     Rs. 850/-                                      
+A-02       TR-03      STD-01     Rs. 850/-                                      
+B-01       TR-03      STD-01     Rs. 850/-                                      
+
+SEAT_ID    TIER_ID    STADIUM_ID PRICE                                          
+---------- ---------- ---------- ----------                                     
+B-02       TR-03      STD-01     Rs. 850/-                                      
+A-01       TR-04      STD-01     Rs. 900/-                                      
+A-02       TR-04      STD-01     Rs. 900/-                                      
+B-01       TR-04      STD-01     Rs. 900/-                                      
+B-02       TR-04      STD-01     Rs. 900/-                                      
+
+16 rows selected.
+
+SQL> create table Tickets(
+  2  ticket_id varchar2(10) primary key,
+  3  admin_id varchar2(10),
+  4  customer_id varchar2(10),
+  5  match_id varchar2(10),
+  6  stadium_id varchar2(10),
+  7  tier_id varchar2(10),
+  8  seat_id varchar2(10),
+  9  price varchar2(10) NOT NULL,
+ 10  foreign key(admin_id) references Admin(admin_id),
+ 11  foreign key(customer_id) references Customer(customer_id),
+ 12  foreign key(match_id) references Matches(match_id),
+ 13  foreign key(seat_id, tier_id, stadium_id) references Seat(seat_id, tier_id, stadium_id));
+
+Table created.
+
+SQL> desc Tickets;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ TICKET_ID                                 NOT NULL VARCHAR2(10)
+ ADMIN_ID                                           VARCHAR2(10)
+ CUSTOMER_ID                                        VARCHAR2(10)
+ MATCH_ID                                           VARCHAR2(10)
+ STADIUM_ID                                         VARCHAR2(10)
+ TIER_ID                                            VARCHAR2(10)
+ SEAT_ID                                            VARCHAR2(10)
+ PRICE                                     NOT NULL VARCHAR2(10)
+
+SQL> insert into Tickets values('TCK-01', 'ADMIN', 'CS-02', 'MT-07', 'STD-01', 'TR-02', 'A-01', 'Rs. 800/-');
+
+1 row created.
+
+SQL> insert into Tickets values('TCK-02', 'ADMIN', 'CS-02', 'MT-01', 'STD-01', 'TR-01', 'B-02', 'Rs. 1000/-');
+
+1 row created.
+
+SQL> insert into Tickets values('TCK-03', 'ADMIN', 'CS-04', 'MT-04', 'STD-01', 'TR-04', 'A-02', 'Rs. 900/-');
+
+1 row created.
+
+SQL> select * from Tickets;
+
+TICKET_ID  ADMIN_ID   CUSTOMER_I MATCH_ID   STADIUM_ID TIER_ID    SEAT_ID       
+---------- ---------- ---------- ---------- ---------- ---------- ----------    
+PRICE                                                                           
+----------                                                                      
+TCK-01     ADMIN      CS-02      MT-07      STD-01     TR-02      A-01          
+Rs. 800/-                                                                       
+                                                                                
+TCK-02     ADMIN      CS-02      MT-01      STD-01     TR-01      B-02          
+Rs. 1000/-                                                                      
+                                                                                
+TCK-03     ADMIN      CS-04      MT-04      STD-01     TR-04      A-02          
+Rs. 900/-                                                                       
+                                                                                
+
+SQL> create table Bookings(
+  2  booking_id varchar2(10) primary key,
+  3  customer_id varchar2(10),
+  4  ticket_id varchar2(10),
+  5  bdate DATE,
+  6  foreign key(customer_id) references Customer(customer_id),
+  7  foreign key(ticket_id) references Tickets(ticket_id));
+
+Table created.
+
+SQL> desc Bookings;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ BOOKING_ID                                NOT NULL VARCHAR2(10)
+ CUSTOMER_ID                                        VARCHAR2(10)
+ TICKET_ID                                          VARCHAR2(10)
+ BDATE                                              DATE
+
+SQL> insert into Bookings values('BK-01', 'CS-02', 'TCK-01', '06-JUN-21');
+
+1 row created.
+
+SQL> insert into Bookings values('BK-02', 'CS-02', 'TCK-02', '07-JUN-21');
+
+1 row created.
+
+SQL> insert into Bookings values('BK-03', 'CS-04', 'TCK-03', '07-JUN-21');
+
+1 row created.
+
+SQL> select * from Bookings;
+
+BOOKING_ID CUSTOMER_I TICKET_ID  BDATE                                          
+---------- ---------- ---------- ---------                                      
+BK-01      CS-02      TCK-01     06-JUN-21                                      
+BK-02      CS-02      TCK-02     07-JUN-21                                      
+BK-03      CS-04      TCK-03     07-JUN-21                                      
+
+SQL> select C.customer_name, M.team1, M.team2, ST.stadium_name, T.tier_name, S.seat_id, SH.mdate from Tickets TC, Customer C, Matches M, Schedule SH, Stadium ST, Tier T, Seat S where C.customer_id ='CS-02' and TC.customer_id = C.customer_id and M.match_id = TC.match_id and SH.match_id = M.match_id and S.seat_id = TC.seat_id and S.tier_id = TC.tier_id and S.stadium_id = TC.stadium_id and T.tier_id = S.tier_id and T.stadium_id = S.stadium_id and ST.stadium_id = S.stadium_id;
+
+CUSTOMER_NAME        TEAM1      TEAM2      STADIUM_NAME                         
+-------------------- ---------- ---------- -------------------------            
+TIER_NAME            SEAT_ID    MDATE                                           
+-------------------- ---------- ---------                                       
+Andy                 CSK        KKR        Rajiv Gandhi STD                     
+North Pavilion End   B-02       26-SEP-21                                       
+                                                                                
+Andy                 CSK        MI         Rajiv Gandhi STD                     
+South Pavilion End   A-01       01-OCT-21                                       
+                                                                                
+SQL> commit;
+
+Commit complete.
+
+SQL> spool off;
